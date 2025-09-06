@@ -2,6 +2,7 @@ package hello.hello_spring.controller;
 
 
 import hello.hello_spring.domain.Member;
+import hello.hello_spring.repository.MemberRepository;
 import hello.hello_spring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,13 @@ import java.util.List;
 @Controller
 public class MemberController {
 
+    private final MemberRepository memberRepository;
     private MemberService memberService;
 
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, MemberRepository memberRepository) {
         this.memberService = memberService;
-
+        this.memberRepository = memberRepository;
     }
 
     @GetMapping("/members/new")
@@ -44,5 +46,11 @@ public class MemberController {
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
         return "members/memberList";
+    }
+
+    @GetMapping("/test")
+    public void createDummy() {
+        memberService.saveCreateDummy();
+
     }
 }

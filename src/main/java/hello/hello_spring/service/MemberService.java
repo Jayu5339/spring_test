@@ -6,10 +6,13 @@ import hello.hello_spring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@Transactional
 public class MemberService {
     private MemberRepository memberRepository;
 
@@ -38,5 +41,12 @@ public class MemberService {
 
     public Optional<Member> findOne(Long memberID) {
         return memberRepository.findById(memberID);
+    }
+
+    public void saveCreateDummy() {
+        Member member = new Member();
+        member.setName("dummy");
+        memberRepository.save(member);
+
     }
 }
